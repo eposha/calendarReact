@@ -1,8 +1,8 @@
 import React from "react";
-import TodoList from "./TodoList";
+import Calendar from "./Calendar";
 
 const App = () => {
-  return <TodoList />;
+  return <Calendar />;
 };
 
 export default App;
