@@ -4,7 +4,7 @@ import BlockHours from "./BlockHours";
 
 const BlockDays = () => {
   const blockDay = generateNumbersRange(0, 6).map(arg => (
-    <div key={arg} className="block-day">
+    <div key={arg} className="block-day" id={`block-${arg}`}>
       <BlockHours />
     </div>
   ));
