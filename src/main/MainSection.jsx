@@ -6,9 +6,6 @@ import BlockDay from "./BlockDay";
 import "./mainSection.scss";
 
 class MainSection extends React.Component {
-  state = {
-    blockDateId: this.props.setDateBlock
-  };
   render() {
     return (
       <section className="main">
@@ -18,7 +15,7 @@ class MainSection extends React.Component {
             <TimesDay />
             <TimeLines />
           </div>
-          <BlockDay />
+          <BlockDay dayId={this.props.setDateBlock} />
         </div>
       </section>
     );

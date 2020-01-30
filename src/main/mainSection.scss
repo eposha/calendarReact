@@ -65,6 +65,18 @@
             border: 1px solid #dddfe2;
             border-bottom: none;
             border-right: none;
+
+            .event {
+                display: flex;
+                flex-direction: column;
+                padding: 5px;
+                height: 60px;
+                width: 90%;
+                border-radius: 5px;
+                color: #fff;
+                background-color: #029be5;
+                opacity: 0.9;
+            }
         }
     }
 }
