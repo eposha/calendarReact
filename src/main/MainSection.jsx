@@ -5,19 +5,21 @@ import TimeLines from "./TimeLines";
 import BlockDay from "./BlockDay";
 import "./mainSection.scss";
 
-const MainSection = () => {
-  return (
-    <section className="main">
-      <HolidayLine />
-      <div className="wrapper-time">
-        <div className="time">
-          <TimesDay />
-          <TimeLines />
+class MainSection extends React.Component {
+  render() {
+    return (
+      <section className="main">
+        <HolidayLine />
+        <div className="wrapper-time">
+          <div className="time">
+            <TimesDay />
+            <TimeLines />
+          </div>
+          <BlockDay dayId={this.props.setDateBlock} />
         </div>
-        <BlockDay />
-      </div>
-    </section>
-  );
-};
+      </section>
+    );
+  }
+}
 
 export default MainSection;
