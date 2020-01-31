@@ -10,16 +10,22 @@ const WeekDays = ({ addDay }) => {
       .startOf("isoWeek")
       .add(currentDay, "day");
 
-    const markCurrentDay =
-      moment().format("DD.MM.YY") === startOfWeek.format("DD.MM.YY")
-        ? "day-date day-date__current"
-        : "day-date ";
+    let markCurrentDay;
+    let markCurrentDayName;
+
+    if (moment().format("DD.MM.YY") === startOfWeek.format("DD.MM.YY")) {
+      markCurrentDay = "day-date day-date__current";
+      markCurrentDayName = "day-name day-name__current";
+    } else {
+      markCurrentDay = "day-date";
+      markCurrentDayName = "day-name ";
+    }
 
     currentDay++;
 
     return (
       <li key={li} className="week__day">
-        <span className="day-name">{startOfWeek.format("ddd")}</span>
+        <span className={markCurrentDayName}>{startOfWeek.format("ddd")}</span>
         <span className={markCurrentDay}>{startOfWeek.format("DD")}</span>
       </li>
     );

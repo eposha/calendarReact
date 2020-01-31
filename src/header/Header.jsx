@@ -6,13 +6,13 @@ import WeekDays from "./WeekDays";
 import { getCurrentDate } from "./showData";
 import "./header.scss";
 
-const Header = ({ nextWeek, prevWeek, currentWeek, addDay }) => {
+const Header = ({ showPopup, nextWeek, prevWeek, currentWeek, addDay }) => {
   const currentData = getCurrentDate(addDay);
 
   return (
     <div className="header">
       <div className="navigation">
-        <AddButton />
+        <AddButton showPopup={showPopup} />
         <TodayButton onClick={currentWeek} />
         <NavigationButtons onClick={nextWeek} onClickPrev={prevWeek} />
         <div className="current-month">{currentData}</div>
