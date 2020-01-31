@@ -1,8 +1,8 @@
 import React from "react";
 
-const AddButton = () => {
+const AddButton = ({ showPopup }) => {
   return (
-    <button className="add-button add-event">
+    <button className="add-button add-event" onClick={showPopup}>
       <div className="VVsfQ add-event">
         <svg className="add-event" width="36" height="36" viewBox="0 0 36 36">
           <path className="add-event" fill="#34A853" d="M16 16v14h4V20z"></path>

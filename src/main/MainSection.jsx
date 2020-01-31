@@ -7,6 +7,7 @@ import "./mainSection.scss";
 
 class MainSection extends React.Component {
   render() {
+    const { showPopup, setDateBlock, events } = this.props;
     return (
       <section className="main">
         <HolidayLine />
@@ -15,7 +16,11 @@ class MainSection extends React.Component {
             <TimesDay />
             <TimeLines />
           </div>
-          <BlockDay dayId={this.props.setDateBlock} />
+          <BlockDay
+            dayId={setDateBlock}
+            showPopup={showPopup}
+            events={events}
+          />
         </div>
       </section>
     );
