@@ -2,7 +2,7 @@ import React from "react";
 import { generateNumbersRange } from "../utilities";
 import BlockHours from "./BlockHours";
 
-const BlockDays = ({ dayId, showPopup, events }) => {
+const BlockDays = ({ dayId, showPopup, events, deleteEvent, dateEvent }) => {
   let idForHour = dayId;
   const blockDay = generateNumbersRange(0, 6).map(arg => {
     let idHour = moment()
@@ -13,7 +13,13 @@ const BlockDays = ({ dayId, showPopup, events }) => {
 
     return (
       <div key={arg} className="block-day">
-        <BlockHours hourId={idHour} events={events} showPopup={showPopup} />
+        <BlockHours
+          hourId={idHour}
+          events={events}
+          showPopup={showPopup}
+          dateEvent={dateEvent}
+          deleteEvent={deleteEvent}
+        />
       </div>
     );
   });

@@ -7,7 +7,13 @@ import "./mainSection.scss";
 
 class MainSection extends React.Component {
   render() {
-    const { showPopup, setDateBlock, events } = this.props;
+    const {
+      showPopup,
+      setDateBlock,
+      events,
+      deleteEvent,
+      dateEvent
+    } = this.props;
     return (
       <section className="main">
         <HolidayLine />
@@ -20,6 +26,8 @@ class MainSection extends React.Component {
             dayId={setDateBlock}
             showPopup={showPopup}
             events={events}
+            dateEvent={dateEvent}
+            deleteEvent={deleteEvent}
           />
         </div>
       </section>

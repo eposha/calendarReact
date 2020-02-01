@@ -3,65 +3,85 @@ import DatesEvent from "./DatesEvetn";
 import DescriptionEvent from "./DescriptionEvent";
 import FormButtons from "./FormButtons";
 
-class Form extends React.Component {
-  state = {
-    nameEvent: "",
-    descriptionEvent: "",
-    dateEvent: "",
-    timeEvent: ""
-    // startEvent: ""
-  };
+const Form = ({
+  handleSubmit,
+  nameEvent,
+  handleChangeName,
+  valueDataByClick,
+  valueTimeByClick,
+  handleDateBegin,
+  handleTimeBegin,
+  endTimeEvent,
+  endDateEvent,
+  handleChangeEndTime,
+  handleChangeEndDate,
+  descriptionEvent,
+  handleChangeDescription,
+  deleteOnclick
+}) => {
+  // state = {
+  //   nameEvent: "",
+  //   descriptionEvent: "",
+  //   endDateEvent: "",
+  //   endTimeEvent: ""
+  // };
 
-  handleChangeName = event => {
-    this.setState({ nameEvent: event.target.value });
-  };
+  // handleChangeName = event => {
+  //   setState({ nameEvent: event.target.value });
+  // };
 
-  handleChangeDescription = event => {
-    this.setState({ descriptionEvent: event.target.value });
-  };
+  // handleChangeDescription = event => {
+  //   setState({ descriptionEvent: event.target.value });
+  // };
 
-  handleChangeBegin = event => {
-    this.setState({ dateEvent: event.target.value });
-  };
+  // handleChangeEndDate = event => {
+  //   setState({
+  //     endDateEvent: event.target.value
+  //   });
+  // };
 
-  handleTimeBegin = event => {
-    this.setState({ timeEvent: event.target.value });
-  };
+  // handleChangeEndTime = event => {
+  //   setState({
+  //     endTimeEvent: event.target.value
+  //   });
+  // };
 
-  render() {
-    const state = [
-      this.state.nameEvent,
-      this.state.descriptionEvent,
-      this.state.dateEvent,
-      this.state.timeEvent
-    ];
+  // render() {
+  //   const state = [
+  //     nameEvent,
+  //     descriptionEvent,
+  //     endTimeEvent,
+  //     endDateEvent
+  //   ];
 
-    return (
-      <form
-        className="popup__form"
-        onSubmit={() => this.props.handleSubmit(...state)}
-      >
+  return (
+    <>
+      <form className="popup__form" onSubmit={() => handleSubmit()}>
         <input
           type="text"
           className="name-event"
           placeholder="Event name"
-          value={this.state.nameEvent}
-          onChange={this.handleChangeName}
+          value={nameEvent}
+          onChange={handleChangeName}
         />
         <DatesEvent
-          value={this.state.dateEvent}
-          handleChange={this.handleChangeBegin}
-          valueHour={this.state.timeEvent}
-          handleTimeBegin={this.handleTimeBegin}
+          valueDataByClick={valueDataByClick}
+          valueTimeByClick={valueTimeByClick}
+          handleDateBegin={handleDateBegin}
+          handleTimeBegin={handleTimeBegin}
+          valueEndTime={endTimeEvent}
+          valueEndDate={endDateEvent}
+          handleEndTime={handleChangeEndTime}
+          handleEndDate={handleChangeEndDate}
         />
         <DescriptionEvent
-          value={this.state.descriptionEvent}
-          handleChange={this.handleChangeDescription}
+          value={descriptionEvent}
+          handleChange={handleChangeDescription}
         />
-        <FormButtons />
+        <FormButtons deleteOnclick={deleteOnclick} />
       </form>
-    );
-  }
-}
+    </>
+  );
+};
 
 export default Form;
