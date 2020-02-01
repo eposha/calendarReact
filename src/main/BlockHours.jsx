@@ -1,38 +1,50 @@
 import React from "react";
 import { generateNumbersRange } from "../utilities";
+import moment from "moment";
 
-// let events = [
-//   { time: "2020-01-27-04", text: "This is first test" },
-//   { time: "2020-01-28-05", text: "This is first test" },
-//   { time: "2020-01-29-06", text: "This is first test" },
-//   { time: "2020-01-30-01", text: "This is first test" },
-//   { time: "2020-01-31-02", text: "This is first test" },
-//   { time: "2020-02-02-04", text: "This is first test" },
-//   { time: "2020-02-28-04", text: "This is first test" },
-//   { time: "2020-02-18-04", text: "This is first test" },
-//   { time: "2019-12-30-04", text: "This is first test" }
-// ];
-
-const BlockHours = ({ hourId, events, showPopup }) => {
+const BlockHours = ({ hourId, events, showPopup, deleteEvent }) => {
   let idForHour = hourId; //YYYY-MM-DD
 
   const BlockHour = generateNumbersRange(0, 23).map(arg => {
     const hour = `0${arg}`.slice(-2);
     const id = `${idForHour}-${hour}`;
-
+    let some = events;
     let findedEvent = events.find(
       event => event.startEvent.slice(0, -3) === id
     );
 
-    let event = !findedEvent ? null : (
-      <div className="event">
-        <span>{findedEvent.startEvent}</span>
-        <span>{findedEvent.nameEvent}</span>
-      </div>
-    );
+    let event;
+    if (findedEvent) {
+      const marginTopEvent = `${findedEvent.startEvent.slice(-2)}px`;
+
+      let endHour = moment(findedEvent.endTimeEvent, "HH:mm").format("HH");
+      if (endHour === "00") endHour = 24;
+      const startHour = moment(findedEvent.timeEvent, "HH:mm").format("HH");
+      const endMinutes = +findedEvent.endTimeEvent.slice(-2);
+      const startMinutes = +findedEvent.timeEvent.slice(-2);
+
+      const heightEvent = `${endHour * 60 -
+        startHour * 60 +
+        endMinutes -
+        startMinutes}px`;
+      event = (
+        <div
+          className="event"
+          style={{ marginTop: `${marginTopEvent}`, height: `${heightEvent}` }}
+          onClick={() => deleteEvent(findedEvent.startEvent)}
+        >
+          <span>{findedEvent.startEvent}</span>
+          <span>{findedEvent.nameEvent}</span>
+        </div>
+      );
+    }
 
     return (
-      <div key={arg} className="block-hour" onClick={showPopup}>
+      <div
+        key={arg}
+        className="block-hour"
+        onClick={() => showPopup(idForHour, `${hour}:00`)}
+      >
         {event}
       </div>
     );

@@ -44,13 +44,13 @@
             border-radius: 8px;
 
             .begin {
-                width: 135px;
+                width: 142px;
                 border: none;
 
             }
 
             .end {
-                width: 135px;
+                width: 142px;
                 border: none;
             }
 
@@ -71,7 +71,8 @@
 
         .control {
             display: flex;
-            margin-top: 50px;
+            margin-top: 45px;
+            margin-left: 25px;
             justify-content: space-between;
 
             .delete-ivent {
@@ -86,6 +87,10 @@
             }
 
             .submit-button {
+                display: flex;
+                justify-content: center;
+                // margin-top: 25px;
+                margin-right: auto;
                 width: 125px;
                 height: 40px;
                 background-color: #029be5;
@@ -95,8 +100,14 @@
                 margin-left: auto;
                 margin-right: 20px;
             }
+
+
         }
+
+
     }
+
+
 }
 
 .hidden-popup {

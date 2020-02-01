@@ -1,16 +1,16 @@
 import React from 'react';
 import { generateNumbersRange } from '../utilities.js';
 
-export const getOptions = () => {
+export const getOptionsBegin = () => {
 
     return generateNumbersRange(0, 23).map(arg => {
-        const hours = `0${arg}`;
+        const hours = `0${arg}`.slice(-2);
         let increase = 0;
         let minutes = `0${increase}`;
-        let option = [];
+        let optionBegin = [];
 
         for (let i = 0; i < 4; i++) {
-            option.push(
+            optionBegin.push(
                 <option
                     key={arg + i}
                     value={`${hours}:${minutes.slice(-2)}`}
@@ -19,6 +19,6 @@ export const getOptions = () => {
             increase += 15;
             minutes = `0${increase}`;
         }
-        return option;
+        return optionBegin;
     });
 }
