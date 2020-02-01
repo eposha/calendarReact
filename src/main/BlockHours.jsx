@@ -2,13 +2,13 @@ import React from "react";
 import { generateNumbersRange } from "../utilities";
 import moment from "moment";
 
-const BlockHours = ({ hourId, events, showPopup, deleteEvent }) => {
+const BlockHours = ({ hourId, events, showPopup, showEventData }) => {
   let idForHour = hourId; //YYYY-MM-DD
 
   const BlockHour = generateNumbersRange(0, 23).map(arg => {
     const hour = `0${arg}`.slice(-2);
+    const nextHour = `0${arg + 1}`.slice(-2);
     const id = `${idForHour}-${hour}`;
-    let some = events;
     let findedEvent = events.find(
       event => event.startEvent.slice(0, -3) === id
     );
@@ -31,10 +31,24 @@ const BlockHours = ({ hourId, events, showPopup, deleteEvent }) => {
         <div
           className="event"
           style={{ marginTop: `${marginTopEvent}`, height: `${heightEvent}` }}
-          onClick={() => deleteEvent(findedEvent.startEvent)}
+          onClick={event =>
+            showEventData(
+              findedEvent.startEvent,
+              findedEvent.nameEvent,
+              findedEvent.descriptionEvent,
+              findedEvent.endDateEvent,
+              findedEvent.endTimeEvent,
+              findedEvent.dateEvent,
+              findedEvent.timeEvent
+            )
+          }
         >
-          <span>{findedEvent.startEvent}</span>
           <span>{findedEvent.nameEvent}</span>
+          <span>
+            {findedEvent.timeEvent} - {findedEvent.endTimeEvent}
+          </span>
+
+          <span>{findedEvent.descriptionEvent}</span>
         </div>
       );
     }
@@ -43,7 +57,7 @@ const BlockHours = ({ hourId, events, showPopup, deleteEvent }) => {
       <div
         key={arg}
         className="block-hour"
-        onClick={() => showPopup(idForHour, `${hour}:00`)}
+        onClick={() => showPopup(idForHour, `${hour}:00`, `${nextHour}:00`)}
       >
         {event}
       </div>

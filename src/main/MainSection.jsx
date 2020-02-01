@@ -11,7 +11,7 @@ class MainSection extends React.Component {
       showPopup,
       setDateBlock,
       events,
-      deleteEvent,
+      showEventData,
       dateEvent
     } = this.props;
     return (
@@ -27,7 +27,7 @@ class MainSection extends React.Component {
             showPopup={showPopup}
             events={events}
             dateEvent={dateEvent}
-            deleteEvent={deleteEvent}
+            showEventData={showEventData}
           />
         </div>
       </section>

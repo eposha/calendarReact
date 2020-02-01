@@ -18,7 +18,8 @@ const Popup = ({
   nameEvent,
   descriptionEvent,
   endDateEvent,
-  endTimeEvent
+  endTimeEvent,
+  isEvent
 }) => {
   const hidden = !isOpen ? "hidden-popup" : "show-popup";
 
@@ -42,6 +43,7 @@ const Popup = ({
         descriptionEvent={descriptionEvent}
         endDateEvent={endDateEvent}
         endTimeEvent={endTimeEvent}
+        isEvent={isEvent}
       />
     </div>
   );

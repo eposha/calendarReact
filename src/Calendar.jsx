@@ -15,6 +15,7 @@ class Calendar extends React.Component {
     timeEvent: "",
     deleteEvent: "",
     isDelete: false,
+    isEvent: false,
     events: []
   };
 
@@ -33,14 +34,6 @@ class Calendar extends React.Component {
   handleCurrentWeek = () => {
     this.setState({
       setDay: 0
-    });
-  };
-
-  handleShowPopup = (date, time) => {
-    this.setState({
-      popupOpen: true,
-      dateEvent: date,
-      timeEvent: time
     });
   };
 
@@ -78,10 +71,44 @@ class Calendar extends React.Component {
     this.setState({ timeEvent: event.target.value });
   };
 
-  showDeleteButton = date => {
-    this.setState({
-      deleteEvent: date
-    });
+  handleShowPopup = (dateStart, timeEvent, endTimeEvent) => {
+    if (event.target.className === "block-hour") {
+      this.setState({
+        popupOpen: true,
+        dateEvent: dateStart,
+        endDateEvent: dateStart,
+        timeEvent,
+        endTimeEvent,
+        nameEvent: "",
+        descriptionEvent: "",
+        isEvent: false,
+        deleteEvent: ""
+      });
+    }
+  };
+
+  showEventData = (
+    date,
+    nameEvent,
+    descriptionEvent,
+    endDateEvent,
+    endTimeEvent,
+    dateEvent,
+    timeEvent
+  ) => {
+    if (event.target.className === "event") {
+      this.setState({
+        popupOpen: true,
+        isEvent: true,
+        deleteEvent: date,
+        nameEvent,
+        descriptionEvent,
+        endDateEvent,
+        endTimeEvent: endTimeEvent,
+        dateEvent,
+        timeEvent
+      });
+    }
   };
 
   deleteEvent = () => {
@@ -105,10 +132,17 @@ class Calendar extends React.Component {
             dateEvent: this.state.dateEvent,
             timeEvent: this.state.timeEvent
           }
-        ],
-        popupOpen: false
+        ].filter(event => event.startEvent !== this.state.deleteEvent),
+        popupOpen: false,
+        startEvent: "",
+        nameEvent: "",
+        descriptionEvent: "",
+        endDateEvent: "",
+        endTimeEvent: "",
+        dateEvent: "",
+        timeEvent: ""
+        // deleteEvent: ""
       });
-      // console.log(this.state.events);
     } else {
       this.setState({
         events: this.state.events.filter(
@@ -134,7 +168,7 @@ class Calendar extends React.Component {
           setDateBlock={this.state.setDay}
           showPopup={this.handleShowPopup}
           events={this.state.events}
-          deleteEvent={this.showDeleteButton}
+          showEventData={this.showEventData}
         />
         <Popup
           isOpen={this.state.popupOpen}
@@ -153,6 +187,7 @@ class Calendar extends React.Component {
           descriptionEvent={this.state.descriptionEvent}
           endDateEvent={this.state.endDateEvent}
           endTimeEvent={this.state.endTimeEvent}
+          isEvent={this.state.isEvent}
         />
       </div>
     );
