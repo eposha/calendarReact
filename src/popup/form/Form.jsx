@@ -17,46 +17,12 @@ const Form = ({
   handleChangeEndDate,
   descriptionEvent,
   handleChangeDescription,
-  deleteOnclick
+  deleteOnclick,
+  isEvent
 }) => {
-  // state = {
-  //   nameEvent: "",
-  //   descriptionEvent: "",
-  //   endDateEvent: "",
-  //   endTimeEvent: ""
-  // };
-
-  // handleChangeName = event => {
-  //   setState({ nameEvent: event.target.value });
-  // };
-
-  // handleChangeDescription = event => {
-  //   setState({ descriptionEvent: event.target.value });
-  // };
-
-  // handleChangeEndDate = event => {
-  //   setState({
-  //     endDateEvent: event.target.value
-  //   });
-  // };
-
-  // handleChangeEndTime = event => {
-  //   setState({
-  //     endTimeEvent: event.target.value
-  //   });
-  // };
-
-  // render() {
-  //   const state = [
-  //     nameEvent,
-  //     descriptionEvent,
-  //     endTimeEvent,
-  //     endDateEvent
-  //   ];
-
   return (
     <>
-      <form className="popup__form" onSubmit={() => handleSubmit()}>
+      <form className="popup__form" onSubmit={handleSubmit}>
         <input
           type="text"
           className="name-event"
@@ -78,7 +44,7 @@ const Form = ({
           value={descriptionEvent}
           handleChange={handleChangeDescription}
         />
-        <FormButtons deleteOnclick={deleteOnclick} />
+        <FormButtons deleteOnclick={deleteOnclick} isEvent={isEvent} />
       </form>
     </>
   );
