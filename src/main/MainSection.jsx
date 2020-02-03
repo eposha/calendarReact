@@ -12,7 +12,8 @@ class MainSection extends React.Component {
       setDateBlock,
       events,
       showEventData,
-      dateEvent
+      dateEvent,
+      blink
     } = this.props;
     return (
       <section className="main">
@@ -28,6 +29,7 @@ class MainSection extends React.Component {
             events={events}
             dateEvent={dateEvent}
             showEventData={showEventData}
+            blink={blink}
           />
         </div>
       </section>

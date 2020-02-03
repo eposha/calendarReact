@@ -76,6 +76,7 @@
                 border-radius: 5px;
                 color: #fff;
                 background-color: #029be5;
+                border: 2px solid #029be5;
                 cursor: pointer;
                 opacity: 0.9;
             }
@@ -103,36 +104,17 @@
     }
 }
 
+@keyframes pulsate {
+    50% {
+        color: #fff;
+        text-shadow: 0 -1px rgba(0, 0, 0, .3), 0 0 5px #f03000, 0 0 8px #f80000;
+    }
+}
 
 .blink1 {
-    -webkit-animation: blink1 3s linear infinite;
-    animation: blink1 3s linear infinite;
-}
-
-@-webkit-keyframes blink1 {
-    0% {
-        border: 1px solid rgba(34, 34, 34, 1);
-    }
-
-    50% {
-        border: 1px solid rgba(34, 34, 34, 0);
-    }
-
-    100% {
-        border: 1px solid rgba(34, 34, 34, 1);
-    }
-}
-
-@keyframes blink1 {
-    0% {
-        border: 1px solid rgba(34, 34, 34, 1);
-    }
-
-    50% {
-        border: 1px solid rgba(34, 34, 34, 0);
-    }
-
-    100% {
-        border: 1px rgba(34, 34, 34, 1);
-    }
+    color: rgb(245, 245, 245);
+    text-shadow: 0 -1px rgba(0, 0, 0, .1);
+    text-decoration: none;
+    -webkit-animation: pulsate 1.2s linear infinite;
+    animation: pulsate 1.2s linear infinite;
 }
