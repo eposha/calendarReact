@@ -5,7 +5,7 @@ const getTop = () => {
   const hours = moment().format("H");
   const minutes = moment().format("m");
   const top = +hours * 60 + +minutes;
-  return `${+top + 151}px`;
+  return `${top}px`;
 };
 
 class Redline extends React.Component {

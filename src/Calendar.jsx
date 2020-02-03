@@ -2,6 +2,8 @@ import React from "react";
 import Header from "./header/Header";
 import MainSection from "./main/MainSection";
 import Popup from "./popup/popup";
+import { validation } from "./validation";
+import { validateDelete } from "./validateDelete";
 
 class Calendar extends React.Component {
   state = {
@@ -96,7 +98,11 @@ class Calendar extends React.Component {
     dateEvent,
     timeEvent
   ) => {
-    if (event.target.className === "event") {
+    if (
+      event.target.className === "event" ||
+      event.target.tagName === "SPAN" ||
+      event.target.className === "event blink1"
+    ) {
       this.setState({
         popupOpen: true,
         isEvent: true,
@@ -117,14 +123,42 @@ class Calendar extends React.Component {
     });
   };
 
-  handleSubmit = () => {
+  clearForm = () => {
+    this.setState({
+      popupOpen: false,
+      startEvent: "",
+      nameEvent: "",
+      descriptionEvent: "",
+      endDateEvent: "",
+      endTimeEvent: "",
+      dateEvent: "",
+      timeEvent: ""
+    });
+  };
+
+  handleSubmit = event => {
     event.preventDefault();
     if (!this.state.isDelete) {
+      if (
+        !validation(
+          this.state.dateEvent,
+          this.state.endDateEvent,
+          this.state.timeEvent,
+          this.state.endTimeEvent,
+          this.state.events,
+          this.state.isDelete,
+          this.state.deleteEvent
+        )
+      )
+        return;
       this.setState({
         events: [
-          ...this.state.events,
+          ...this.state.events.filter(
+            event => event.startEvent !== this.state.deleteEvent
+          ),
           {
             startEvent: `${this.state.dateEvent}-${this.state.timeEvent}`,
+            endEvent: `${this.state.endDateEvent}-${this.state.endTimeEvent}`,
             nameEvent: this.state.nameEvent,
             descriptionEvent: this.state.descriptionEvent,
             endDateEvent: this.state.endDateEvent,
@@ -132,18 +166,16 @@ class Calendar extends React.Component {
             dateEvent: this.state.dateEvent,
             timeEvent: this.state.timeEvent
           }
-        ].filter(event => event.startEvent !== this.state.deleteEvent),
-        popupOpen: false,
-        startEvent: "",
-        nameEvent: "",
-        descriptionEvent: "",
-        endDateEvent: "",
-        endTimeEvent: "",
-        dateEvent: "",
-        timeEvent: ""
-        // deleteEvent: ""
+        ]
+        // .filter(event => event.startEvent !== this.state.deleteEvent)
       });
     } else {
+      if (!validateDelete(this.state.deleteEvent)) {
+        this.setState({
+          isDelete: false
+        });
+        return;
+      }
       this.setState({
         events: this.state.events.filter(
           event => event.startEvent !== this.state.deleteEvent
@@ -152,6 +184,7 @@ class Calendar extends React.Component {
         isDelete: false
       });
     }
+    this.clearForm();
   };
 
   render() {

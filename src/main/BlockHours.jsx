@@ -29,7 +29,8 @@ const BlockHours = ({ hourId, events, showPopup, showEventData }) => {
         startMinutes}px`;
       event = (
         <div
-          className="event"
+          className="event blink1"
+          // id="blink1"
           style={{ marginTop: `${marginTopEvent}`, height: `${heightEvent}` }}
           onClick={event =>
             showEventData(
