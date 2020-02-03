@@ -4,7 +4,6 @@ import moment from "moment";
 
 const BlockHours = ({ hourId, events, showPopup, showEventData, blink }) => {
   let idForHour = hourId; //YYYY-MM-DD
-  console.log(events);
   const BlockHour = generateNumbersRange(0, 23).map(arg => {
     const hour = `0${arg}`.slice(-2);
     const nextHour = `0${arg + 1}`.slice(-2);
