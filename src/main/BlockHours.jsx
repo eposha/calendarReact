@@ -2,19 +2,21 @@ import React from "react";
 import { generateNumbersRange } from "../utilities";
 import moment from "moment";
 
-const BlockHours = ({ hourId, events, showPopup, showEventData }) => {
+const BlockHours = ({ hourId, events, showPopup, showEventData, blink }) => {
   let idForHour = hourId; //YYYY-MM-DD
 
   const BlockHour = generateNumbersRange(0, 23).map(arg => {
     const hour = `0${arg}`.slice(-2);
     const nextHour = `0${arg + 1}`.slice(-2);
     const id = `${idForHour}-${hour}`;
+
     let findedEvent = events.find(
       event => event.startEvent.slice(0, -3) === id
     );
 
     let event;
     if (findedEvent) {
+      let blinkData = findedEvent.startEvent;
       const marginTopEvent = `${findedEvent.startEvent.slice(-2)}px`;
 
       let endHour = moment(findedEvent.endTimeEvent, "HH:mm").format("HH");
@@ -27,9 +29,12 @@ const BlockHours = ({ hourId, events, showPopup, showEventData }) => {
         startHour * 60 +
         endMinutes -
         startMinutes}px`;
+
+      const classEvent = blink == blinkData ? "event blink1" : "event";
+
       event = (
         <div
-          className="event"
+          className={classEvent}
           style={{ marginTop: `${marginTopEvent}`, height: `${heightEvent}` }}
           onClick={event =>
             showEventData(
