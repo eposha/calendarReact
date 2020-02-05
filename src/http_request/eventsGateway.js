@@ -1,13 +1,13 @@
 const baseUrl =
-    "https://crudcrud.com/api/5a0a373fa41946beae5795cefaa70b08/events";
+    "https://crudcrud.com/api/46e6322de5174e3a8c0733f69bcc738b/events";
 
-export const createEvent = taskData => {
+export const createEvent = eventData => {
     return fetch(baseUrl, {
         method: "POST",
         headers: {
             "Content-Type": "application/json; utc-8"
         },
-        body: JSON.stringify(taskData)
+        body: JSON.stringify(eventData)
     }).then(response => {
         if (!response.ok) {
             throw new Error("Failed to create event");
@@ -22,7 +22,7 @@ export const fetchEvents = () => {
                 return response.json();
             }
         })
-        .then(tasksList => tasksList.map(({ _id, ...task }) => ({
+        .then(eventsList => eventsList.map(({ _id, ...task }) => ({
             id: _id,
             ...task
         })));
