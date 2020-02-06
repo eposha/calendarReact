@@ -1,5 +1,5 @@
 import React from 'react';
-import { generateNumbersRange } from '../utilities.js';
+import { generateNumbersRange } from '../utilities/utilities';
 
 export const getOptionsBegin = () => {
 

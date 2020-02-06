@@ -1,5 +1,5 @@
 import React from "react";
-import { generateNumbersRange } from "../utilities";
+import { generateNumbersRange } from "../utilities/utilities";
 
 const TimeLines = () => {
   const lines = generateNumbersRange(0, 23).map(arg => (

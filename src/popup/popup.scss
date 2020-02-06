@@ -75,17 +75,6 @@
             margin-left: 25px;
             justify-content: space-between;
 
-            .delete-ivent {
-                background-color: transparent;
-                border: none;
-                outline: none;
-                // display: none;
-            }
-
-            .delete-ivent__off {
-                display: none;
-            }
-
             .submit-button {
                 display: flex;
                 justify-content: center;
@@ -101,10 +90,22 @@
                 margin-right: 20px;
             }
 
-
         }
+    }
 
+    .delete-ivent {
+        display: flex;
+        margin-top: -28px;
+        margin-left: 23px;
+        width: 20px;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        // display: none;
+    }
 
+    .delete-ivent__off {
+        display: none;
     }
 
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { generateNumbersRange } from "../utilities";
+import { generateNumbersRange } from "../utilities/utilities";
 import BlockHours from "./BlockHours";
 import Redline from "./RedLine";
 import moment from "moment";
