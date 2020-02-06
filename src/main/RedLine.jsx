@@ -26,7 +26,7 @@ class Redline extends React.Component {
   }
 
   render() {
-    return <div className="red-line" style={{ top: this.state.top }}></div>;
+    return <div className="red-line" style={{ top: this.state.top }} />;
   }
 }
 
