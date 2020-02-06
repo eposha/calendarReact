@@ -1,5 +1,5 @@
 
-export const validationIntersect = (startDate, endDate, startEvent, endEvent, events, deleteEvent) => {
+export const validationIntersect = ({ startDate, endDate, startEvent, endEvent }, events, deleteEvent) => {
 
     const eventsForIntersect = events.filter(event => event.startEvent !== deleteEvent)
     const format = 'YYYY-MM-DD-HH:mm';

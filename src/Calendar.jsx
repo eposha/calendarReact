@@ -2,9 +2,9 @@ import React from "react";
 import Header from "./header/Header";
 import MainSection from "./main/MainSection";
 import Popup from "./popup/popup";
-import { validationIntersect } from "./validationIntersect";
-import { validation } from "./validation";
-import { validateDelete } from "./validateDelete";
+import { validationIntersect } from "./validation/validationIntersect";
+import { validation } from "./validation/validation";
+import { validateDelete } from "./validation/validateDelete";
 import {
   createEvent,
   fetchEvents,
@@ -13,92 +13,57 @@ import {
 
 class Calendar extends React.Component {
   state = {
-    setDay: 0,
-    popupOpen: false,
-    nameEvent: "",
-    descriptionEvent: "",
-    endDateEvent: "",
-    endTimeEvent: "",
-    dateEvent: "",
-    timeEvent: "",
-    deleteEvent: "",
-    isDelete: false,
+    diffWithMondayOfThis: 0,
+    deleteEventData: "",
     isEvent: false,
     blink: "",
-    events: []
+    events: [],
+    popupData: false
   };
 
   handleNextWeek = () => {
     this.setState({
-      setDay: this.state.setDay + 7
+      diffWithMondayOfThis: this.state.diffWithMondayOfThis + 7
     });
   };
 
   handlePrevWeek = () => {
     this.setState({
-      setDay: this.state.setDay - 7
+      diffWithMondayOfThis: this.state.diffWithMondayOfThis - 7
     });
   };
 
   handleCurrentWeek = () => {
     this.setState({
-      setDay: 0
+      diffWithMondayOfThis: 0
     });
   };
 
   handleHidePopup = () => {
     this.setState({
-      popupOpen: false,
-      blink: ""
+      blink: "",
+      popupData: false
     });
-  };
-
-  handleChangeName = event => {
-    this.setState({ nameEvent: event.target.value });
-  };
-
-  handleChangeDescription = event => {
-    this.setState({ descriptionEvent: event.target.value });
-  };
-
-  handleChangeEndDate = event => {
-    this.setState({
-      endDateEvent: event.target.value
-    });
-  };
-
-  handleChangeEndTime = event => {
-    this.setState({
-      endTimeEvent: event.target.value
-    });
-  };
-
-  handleDateBegin = event => {
-    this.setState({ dateEvent: event.target.value });
-  };
-
-  handleTimeBegin = event => {
-    this.setState({ timeEvent: event.target.value });
   };
 
   handleShowPopup = (dateStart, timeEvent, endTimeEvent) => {
     if (event.target.className === "block-hour") {
       this.setState({
-        popupOpen: true,
-        dateEvent: dateStart,
-        endDateEvent: dateStart,
-        timeEvent,
-        endTimeEvent,
-        nameEvent: "",
-        descriptionEvent: "",
+        popupData: {
+          dateEvent: dateStart,
+          endDateEvent: dateStart,
+          timeEvent,
+          endTimeEvent,
+          descriptionEvent: "",
+          nameEvent: ""
+        },
         isEvent: false,
-        deleteEvent: "",
         blink: ""
       });
     }
   };
 
-  showEventData = (
+  showEventData = ({
     date,
     nameEvent,
     descriptionEvent,
@@ -107,7 +72,8 @@ class Calendar extends React.Component {
     dateEvent,
     timeEvent,
     id
-  ) => {
+  }) => {
+    console.log(id);
     if (
       event.target.className === "event" ||
       event.target.tagName === "SPAN" ||
@@ -117,34 +83,39 @@ class Calendar extends React.Component {
         popupOpen: true,
         isEvent: true,
         deleteEvent: date,
-        nameEvent,
-        descriptionEvent,
-        endDateEvent,
-        endTimeEvent: endTimeEvent,
-        dateEvent,
-        timeEvent,
-        id,
-        blink: ""
+        popupData: {
+          nameEvent,
+          descriptionEvent,
+          endDateEvent,
+          endTimeEvent,
+          dateEvent,
+          timeEvent,
+          id
+        },
+        deleteEventData: `${dateEvent}-${timeEvent}`,
+        isEvent: true,
+        blink: "",
+        id
       });
     }
   };
 
   deleteEvent = () => {
-    this.setState({
-      isDelete: true
-    });
-  };
-
-  clearForm = () => {
-    this.setState({
-      popupOpen: false,
-      startEvent: "",
-      nameEvent: "",
-      descriptionEvent: "",
-      endDateEvent: "",
-      endTimeEvent: "",
-      dateEvent: "",
-      timeEvent: ""
+    if (!validateDelete(this.state.deleteEventData)) {
+      this.setState({
+        deleteEventData: false
+      });
+      return;
+    }
+    deleteEvents(this.state.id).then(() => {
+      fetchEvents().then(events => {
+        this.setState({
+          events: events,
+          blink: "",
+          popupData: "",
+          id: null
+        });
+      });
     });
   };
 
@@ -152,20 +123,19 @@ class Calendar extends React.Component {
     fetchEvents().then(events => {
       this.setState({
         events: events,
-        blink: ""
+        blink: "",
+        id: null
       });
     });
   }
 
   handleSubmit = event => {
-    event.preventDefault();
+    if (!validation(event, this.state.events, this.state.deleteEventData))
+      return;
     let intersect = validationIntersect(
-      this.state.dateEvent,
-      this.state.endDateEvent,
-      this.state.timeEvent,
-      this.state.endTimeEvent,
+      event,
       this.state.events,
-      this.state.deleteEvent
+      this.state.deleteEventData
     );
     if (intersect) {
       this.setState({
@@ -173,52 +143,18 @@ class Calendar extends React.Component {
       });
       return;
     }
-    if (!this.state.isDelete) {
-      const valid = validation(
-        this.state.dateEvent,
-        this.state.endDateEvent,
-        this.state.timeEvent,
-        this.state.endTimeEvent,
-        this.state.events,
-        this.state.isDelete,
-        this.state.deleteEvent
-      );
-      if (!valid) return;
-      const event = {
-        startEvent: `${this.state.dateEvent}-${this.state.timeEvent}`,
-        endEvent: `${this.state.endDateEvent}-${this.state.endTimeEvent}`,
-        nameEvent: this.state.nameEvent,
-        descriptionEvent: this.state.descriptionEvent,
-        endDateEvent: this.state.endDateEvent,
-        endTimeEvent: this.state.endTimeEvent,
-        dateEvent: this.state.dateEvent,
-        timeEvent: this.state.timeEvent
-      };
-      createEvent({ ...event }).then(() =>
-        fetchEvents().then(events => {
-          this.setState({
-            events: events,
-            blink: ""
-          });
-        })
-      );
-    } else {
-      if (!validateDelete(this.state.deleteEvent)) {
-        this.setState({
-          isDelete: false
-        });
-        return;
-      }
-      deleteEvents(this.state.id);
-      this.setState({
-        events: this.state.events.filter(
-          event => event.startEvent !== this.state.deleteEvent
-        ),
-        popupOpen: false,
-        isDelete: false
-      });
+    if (this.state.id) {
+      this.deleteEvent();
     }
-    this.clearForm();
+    createEvent(event).then(() => {
+      fetchEvents().then(events => {
+        this.setState({
+          events: events,
+          blink: "",
+          popupData: ""
+        });
+      });
+    });
   };
 
   render() {
@@ -228,41 +164,28 @@ class Calendar extends React.Component {
           nextWeek={this.handleNextWeek}
           prevWeek={this.handlePrevWeek}
           currentWeek={this.handleCurrentWeek}
-          addDay={this.state.setDay}
+          addDay={this.state.diffWithMondayOfThis}
           showPopup={this.handleShowPopup}
         />
         <MainSection
-          setDateBlock={this.state.setDay}
+          setDateBlock={this.state.diffWithMondayOfThis}
           showPopup={this.handleShowPopup}
           events={this.state.events}
           showEventData={this.showEventData}
           blink={this.state.blink}
         />
-        <Popup
-          isOpen={this.state.popupOpen}
-          hidePopup={this.handleHidePopup}
-          handleSubmit={this.handleSubmit}
-          valueDataByClick={this.state.dateEvent}
-          valueTimeByClick={this.state.timeEvent}
-          handleDateBegin={this.handleDateBegin}
-          handleTimeBegin={this.handleTimeBegin}
-          deleteOnclick={this.deleteEvent}
-          handleChangeName={this.handleChangeName}
-          handleChangeDescription={this.handleChangeDescription}
-          handleChangeEndDate={this.handleChangeEndDate}
-          handleChangeEndTime={this.handleChangeEndTime}
-          nameEvent={this.state.nameEvent}
-          descriptionEvent={this.state.descriptionEvent}
-          endDateEvent={this.state.endDateEvent}
-          endTimeEvent={this.state.endTimeEvent}
-          isEvent={this.state.isEvent}
-        />
+        {this.state.popupData && (
+          <Popup
+            {...this.state.popupData}
+            hidePopup={this.handleHidePopup}
+            handleSubmit={this.handleSubmit}
+            deleteEvent={this.deleteEvent}
+            isEvent={this.state.isEvent}
+          />
+        )}
       </div>
     );
   }
 }
 
 export default Calendar;
-
-// 1. take data from popup
-// 2. add this data to state

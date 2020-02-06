@@ -3,48 +3,39 @@ import Form from "./form/Form";
 import "./popup.scss";
 
 const Popup = ({
-  isOpen,
-  hidePopup,
-  handleSubmit,
-  valueDataByClick,
-  valueTimeByClick,
-  handleDateBegin,
-  handleTimeBegin,
-  deleteOnclick,
-  handleChangeName,
-  handleChangeDescription,
-  handleChangeEndDate,
-  handleChangeEndTime,
-  nameEvent,
-  descriptionEvent,
+  dateEvent,
+  timeEvent,
   endDateEvent,
   endTimeEvent,
+  handleSubmit,
+  deleteEvent,
+  hidePopup,
+  nameEvent,
+  descriptionEvent,
   isEvent
 }) => {
-  const hidden = !isOpen ? "hidden-popup" : "show-popup";
-
   return (
-    <div className={`popup ${hidden}`}>
+    <div className="popup">
       <button className="close material-icons" onClick={hidePopup}>
         close
       </button>
       <Form
+        dateEvent={dateEvent}
+        timeEvent={timeEvent}
+        endTimeEvent={endTimeEvent}
+        endDateEvent={endDateEvent}
         handleSubmit={handleSubmit}
-        valueDataByClick={valueDataByClick}
-        valueTimeByClick={valueTimeByClick}
-        handleDateBegin={handleDateBegin}
-        handleTimeBegin={handleTimeBegin}
-        deleteOnclick={deleteOnclick}
-        handleChangeName={handleChangeName}
-        handleChangeDescription={handleChangeDescription}
-        handleChangeEndDate={handleChangeEndDate}
-        handleChangeEndTime={handleChangeEndTime}
+        deleteEvent={deleteEvent}
+        isEvent={isEvent}
         nameEvent={nameEvent}
         descriptionEvent={descriptionEvent}
-        endDateEvent={endDateEvent}
-        endTimeEvent={endTimeEvent}
-        isEvent={isEvent}
       />
+      <button
+        className={`delete-ivent   ${!isEvent && "delete-ivent__off"}`}
+        onClick={deleteEvent}
+      >
+        <i className="Tiny material-icons ">delete</i>
+      </button>
     </div>
   );
 };

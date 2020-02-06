@@ -1,5 +1,5 @@
 import React from "react";
-import { generateNumbersRange } from "../utilities";
+import { generateNumbersRange } from "../utilities/utilities";
 
 const TimesDay = () => {
   const timesBlock = generateNumbersRange(1, 23).map(arg => {

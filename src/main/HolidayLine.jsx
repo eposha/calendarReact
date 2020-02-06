@@ -1,5 +1,5 @@
 import React from "react";
-import { generateNumbersRange } from "../utilities";
+import { generateNumbersRange } from "../utilities/utilities";
 
 const HolidayLine = () => {
   const holiday = generateNumbersRange(0, 6).map(arg => (

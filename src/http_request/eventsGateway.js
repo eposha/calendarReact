@@ -1,11 +1,11 @@
 const baseUrl =
-    "https://crudcrud.com/api/46e6322de5174e3a8c0733f69bcc738b/events";
+    "https://5e39354daad22200149624f6.mockapi.io/events";
 
 export const createEvent = eventData => {
     return fetch(baseUrl, {
         method: "POST",
         headers: {
-            "Content-Type": "application/json; utc-8"
+            'Content-Type': 'application/json;charset=utf-8',
         },
         body: JSON.stringify(eventData)
     }).then(response => {
@@ -22,11 +22,6 @@ export const fetchEvents = () => {
                 return response.json();
             }
         })
-        .then(eventsList => eventsList.map(({ _id, ...task }) => ({
-            id: _id,
-            ...task
-        })));
-
 }
 
 export const deleteEvents = (id) => {

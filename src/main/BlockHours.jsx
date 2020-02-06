@@ -1,5 +1,5 @@
 import React from "react";
-import { generateNumbersRange } from "../utilities";
+import { generateNumbersRange } from "../utilities/utilities";
 import moment from "moment";
 
 const BlockHours = ({ hourId, events, showPopup, showEventData, blink }) => {
@@ -17,8 +17,8 @@ const BlockHours = ({ hourId, events, showPopup, showEventData, blink }) => {
     if (findedEvent) {
       let blinkData = findedEvent.startEvent;
       const marginTopEvent = `${findedEvent.startEvent.slice(-2)}px`;
-
       let endHour = moment(findedEvent.endTimeEvent, "HH:mm").format("HH");
+
       if (endHour === "00") endHour = 24;
       const startHour = moment(findedEvent.timeEvent, "HH:mm").format("HH");
       const endMinutes = +findedEvent.endTimeEvent.slice(-2);
@@ -35,25 +35,12 @@ const BlockHours = ({ hourId, events, showPopup, showEventData, blink }) => {
         <div
           className={classEvent}
           style={{ marginTop: `${marginTopEvent}`, height: `${heightEvent}` }}
-          onClick={event =>
-            showEventData(
-              findedEvent.startEvent,
-              findedEvent.nameEvent,
-              findedEvent.descriptionEvent,
-              findedEvent.endDateEvent,
-              findedEvent.endTimeEvent,
-              findedEvent.dateEvent,
-              findedEvent.timeEvent,
-              findedEvent.id
-            )
-          }
+          onClick={() => showEventData(findedEvent)}
         >
           <span>{findedEvent.nameEvent}</span>
           <span>
             {findedEvent.timeEvent} - {findedEvent.endTimeEvent}
           </span>
-
-          {/* <span>{findedEvent.descriptionEvent}</span> */}
         </div>
       );
     }

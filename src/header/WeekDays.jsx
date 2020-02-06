@@ -1,5 +1,5 @@
 import React from "react";
-import { generateNumbersRange } from "../utilities";
+import { generateNumbersRange } from "../utilities/utilities";
 import moment from "moment";
 
 const WeekDays = ({ addDay }) => {
