@@ -47,57 +47,52 @@ class Calendar extends React.Component {
   };
 
   handleShowPopup = (dateStart, timeEvent, endTimeEvent) => {
-    if (event.target.className === "block-hour") {
-      this.setState({
-        popupData: {
-          dateEvent: dateStart,
-          endDateEvent: dateStart,
-          timeEvent,
-          endTimeEvent,
-          descriptionEvent: "",
-          nameEvent: ""
-        },
-        isEvent: false,
-        blink: ""
-      });
-    }
+    this.setState({
+      popupData: {
+        dateEvent: dateStart,
+        endDateEvent: dateStart,
+        timeEvent,
+        endTimeEvent,
+        descriptionEvent: "",
+        nameEvent: ""
+      },
+      isEvent: false,
+      blink: ""
+    });
   };
 
-  showEventData = ({
-    date,
-    nameEvent,
-    descriptionEvent,
-    endDateEvent,
-    endTimeEvent,
-    dateEvent,
-    timeEvent,
-    id
-  }) => {
-    console.log(id);
-    if (
-      event.target.className === "event" ||
-      event.target.tagName === "SPAN" ||
-      event.target.className === "event blink1"
-    ) {
-      this.setState({
-        popupOpen: true,
-        isEvent: true,
-        deleteEvent: date,
-        popupData: {
-          nameEvent,
-          descriptionEvent,
-          endDateEvent,
-          endTimeEvent,
-          dateEvent,
-          timeEvent,
-          id
-        },
-        deleteEventData: `${dateEvent}-${timeEvent}`,
-        isEvent: true,
-        blink: "",
-        id
-      });
+  showEventData = (
+    e,
+    {
+      date,
+      nameEvent,
+      descriptionEvent,
+      endDateEvent,
+      endTimeEvent,
+      dateEvent,
+      timeEvent,
+      id
     }
+  ) => {
+    e.stopPropagation();
+    this.setState({
+      popupOpen: true,
+      isEvent: true,
+      deleteEvent: date,
+      popupData: {
+        nameEvent,
+        descriptionEvent,
+        endDateEvent,
+        endTimeEvent,
+        dateEvent,
+        timeEvent,
+        id
+      },
+      deleteEventData: `${dateEvent}-${timeEvent}`,
+      isEvent: true,
+      blink: "",
+      id
+    });
   };
 
   deleteEvent = () => {
